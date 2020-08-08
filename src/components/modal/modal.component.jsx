@@ -5,10 +5,11 @@ import { useHistory } from "react-router-dom";
 import { getContacts } from "./modal.service";
 import { Scrollbars } from "react-custom-scrollbars";
 import { isScrollBarOnBottom } from "../../utils/scrollbar";
-import ContactComponent from "./components/contact.component";
+import ContactComponent from "./components/contact/contact.component";
 import { DebounceInput } from "react-debounce-input";
 import { useDispatch, useStore, useSelector } from "react-redux";
 import { init, fetchNextPage, resetContacts, setQuery } from "./modal.actions";
+import ModalC from "../modalC/modalC.component";
 
 export default function ModalComponent(props) {
   const history = useHistory();
@@ -43,59 +44,62 @@ export default function ModalComponent(props) {
   };
 
   return (
-    <Modal show={true} size="lg" onHide={onClose} backdrop="static">
-      <Modal.Header>
-        <Modal.Title>{props.title}</Modal.Title>
+    <>
+      <Modal show={true} size="lg" onHide={onClose} backdrop="static" centered>
+        <Modal.Header>
+          <Modal.Title>{props.title}</Modal.Title>
 
-        <div>
-          <DebounceInput
-            minLength={1}
-            debounceTimeout={500}
-            value={query}
-            onChange={(e) => getFilteredData(e.target.value)}
-          />
-        </div>
-      </Modal.Header>
-
-      <Modal.Body>
-        <Scrollbars
-          ref={scrollbar}
-          autoHide={false}
-          autoHeightMax={500}
-          autoHeight={true}
-          thumbMinSize={20}
-          onUpdate={fetchMoreContacts}
-        >
-          <div style={{ minHeight: 520 }}>
-            {contacts.map(function (contact) {
-              return showEven ? (
-                contact.id % 2 == 0 && (
-                  <ContactComponent key={contact.id} contact={contact} />
-                )
-              ) : (
-                <ContactComponent key={contact.id} contact={contact} />
-              );
-            })}
+          <div>
+            <DebounceInput
+              minLength={1}
+              debounceTimeout={500}
+              value={query}
+              onChange={(e) => getFilteredData(e.target.value)}
+            />
           </div>
-        </Scrollbars>
-      </Modal.Body>
+        </Modal.Header>
 
-      <Modal.Footer>
-        <Container>
-          <Row>
-            <Col>{loading && <span>Loading...</span>}</Col>
-          </Row>
-          <Row>
-            <Col>
-              <ModalFooter
-                onClose={onClose}
-                showEver={showEven}
-                checkShowEven={() => setShowEven(!showEven)}
-              />
-            </Col>
-          </Row>
-        </Container>
-      </Modal.Footer>
-    </Modal>
+        <Modal.Body>
+          <Scrollbars
+            ref={scrollbar}
+            autoHide={false}
+            autoHeightMax={500}
+            autoHeight={true}
+            thumbMinSize={20}
+            onUpdate={fetchMoreContacts}
+          >
+            <div style={{ minHeight: 520 }}>
+              {contacts.map(function (contact) {
+                return showEven ? (
+                  contact.id % 2 == 0 && (
+                    <ContactComponent key={contact.id} contact={contact} />
+                  )
+                ) : (
+                  <ContactComponent key={contact.id} contact={contact} />
+                );
+              })}
+            </div>
+          </Scrollbars>
+        </Modal.Body>
+
+        <Modal.Footer>
+          <Container>
+            <Row>
+              <Col>{loading && <span>Loading...</span>}</Col>
+            </Row>
+            <Row>
+              <Col>
+                <ModalFooter
+                  onClose={onClose}
+                  showEver={showEven}
+                  checkShowEven={() => setShowEven(!showEven)}
+                />
+              </Col>
+            </Row>
+          </Container>
+        </Modal.Footer>
+      </Modal>
+      <ModalC />
+    </>
   );
 }
