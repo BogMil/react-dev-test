@@ -10,12 +10,13 @@ import { DebounceInput } from "react-debounce-input";
 import { useDispatch, useStore, useSelector } from "react-redux";
 import { init, fetchNextPage, resetContacts, setQuery } from "./modal.actions";
 import ModalC from "../modalC/modalC.component";
+import routes from "../../routes";
 
 export default function ModalComponent(props) {
   const history = useHistory();
-  // const [contacts, setContacts] = useState([]);
-  const [pageNum, setPageNum] = useState(1);
+
   const [showEven, setShowEven] = useState(false);
+
   const scrollbar = useRef(null);
   const dispatch = useDispatch();
 
@@ -27,18 +28,15 @@ export default function ModalComponent(props) {
 
   useEffect(() => {
     dispatch(init(countryId));
-    return () => {
-      console.log("unmount");
-    };
   }, []);
 
-  const onClose = () => history.push("/");
+  const onClose = () => history.push(routes.home);
 
-  const getFilteredData = (value) => {
-    dispatch(setQuery(value));
+  const getFilteredData = (query) => {
+    dispatch(setQuery(query));
   };
 
-  const fetchMoreContacts = async (values) => {
+  const onScrollChange = async (values) => {
     if (contacts.length >= total) return;
     isScrollBarOnBottom(values) && !loading && dispatch(fetchNextPage());
   };
@@ -66,7 +64,7 @@ export default function ModalComponent(props) {
             autoHeightMax={500}
             autoHeight={true}
             thumbMinSize={20}
-            onUpdate={fetchMoreContacts}
+            onUpdate={onScrollChange}
           >
             <div style={{ minHeight: 520 }}>
               {contacts.map(function (contact) {
@@ -91,7 +89,7 @@ export default function ModalComponent(props) {
               <Col>
                 <ModalFooter
                   onClose={onClose}
-                  showEver={showEven}
+                  showEven={showEven}
                   checkShowEven={() => setShowEven(!showEven)}
                 />
               </Col>

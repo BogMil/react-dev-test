@@ -15,7 +15,6 @@ const initialState = () => {
     pageNum: 1,
     total: 0,
     query: "",
-    showOnlyEvenContacts: false,
   };
 };
 

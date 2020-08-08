@@ -6,7 +6,7 @@ import * as serviceWorker from "./serviceWorker";
 import MainScreenComponent from "./components/mainScreen/mainScreen.component";
 import { Provider } from "react-redux";
 import createReduxStore from "./reduxStore";
-
+import routes from "./routes";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import ModalComponent from "./components/modal/modal.component";
 
@@ -15,13 +15,13 @@ ReactDOM.render(
   <Provider store={store}>
     <Router>
       <Switch>
-        <Route key="/modalA" path="/modalA">
+        <Route key={routes.modala} path={routes.modala}>
           <ModalComponent onlyUS={false} title="Modal A" />
         </Route>
-        <Route key="/modalB" path="/modalb">
+        <Route key={routes.modalb} path={routes.modalb}>
           <ModalComponent onlyUS={true} title="Modal B" />
         </Route>
-        <Route path="/">
+        <Route path={routes.home}>
           <MainScreenComponent />
         </Route>
       </Switch>

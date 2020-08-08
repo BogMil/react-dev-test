@@ -73,7 +73,7 @@ export function setLoading(value) {
 }
 
 export function setQuery(query) {
-  return async (dispatch, getState) => {
+  return async (dispatch) => {
     dispatch(resetContacts());
     dispatch(_setQuery(query));
     dispatch(fetchNextPage());

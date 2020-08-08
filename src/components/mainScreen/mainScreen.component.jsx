@@ -2,16 +2,17 @@ import React from "react";
 import { Container, Button } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
 import "../style.css";
+import routes from "../../routes";
 
 export default function MainScreen() {
   const history = useHistory();
 
   const openModalA = () => {
-    history.push("/modala");
+    history.push(routes.modala);
   };
 
   const openModalB = () => {
-    history.push("/modalb");
+    history.push(routes.modalb);
   };
   return (
     <Container
