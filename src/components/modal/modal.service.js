@@ -1,12 +1,19 @@
 import axios from "axios";
 
-export const getContacts = async () => {
+export const getContacts = async (
+  pageNum = 1,
+  countryId = null,
+  query = ""
+) => {
   const bodyParameters = {
     companyId: 171,
     // query - to filter by names and number
-    page: 1,
+    page: pageNum,
     countryId: 226,
   };
+
+  if (!countryId) bodyParameters.countryId = countryId;
+  if (query != null && query != "") bodyParameters.query = query;
 
   const config = {
     headers: {

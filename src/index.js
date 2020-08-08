@@ -8,19 +8,18 @@ import { Provider } from "react-redux";
 import createReduxStore from "./reduxStore";
 
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
-import ModalAComponent from "./components/modals/modalA/modalA.component";
-import ModalBComponent from "./components/modals/modalB/modalB.component";
+import ModalComponent from "./components/modal/modal.component";
 
 let store = createReduxStore();
 ReactDOM.render(
   <Provider store={store}>
     <Router>
       <Switch>
-        <Route path="/modalA">
-          <ModalAComponent />
+        <Route key="/modalA" path="/modalA">
+          <ModalComponent onlyUS={false} title="Modal A" />
         </Route>
-        <Route path="/modalb">
-          <ModalBComponent />
+        <Route key="/modalB" path="/modalb">
+          <ModalComponent onlyUS={true} title="Modal B" />
         </Route>
         <Route path="/">
           <MainScreenComponent />

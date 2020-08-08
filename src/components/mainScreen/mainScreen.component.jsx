@@ -1,6 +1,7 @@
 import React from "react";
 import { Container, Button } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
+import "../style.css";
 
 export default function MainScreen() {
   const history = useHistory();
@@ -23,10 +24,14 @@ export default function MainScreen() {
         justifyContent: "center",
       }}
     >
-      <Button style={{ marginRight: 10 }} onClick={openModalA}>
+      <Button
+        className="a-btn"
+        style={{ marginRight: 10 }}
+        onClick={openModalA}
+      >
         Button A
       </Button>
-      <Button style={{ marginLeft: 10 }} onClick={openModalB}>
+      <Button className="b-btn" style={{ marginLeft: 10 }} onClick={openModalB}>
         Button B
       </Button>
     </Container>
